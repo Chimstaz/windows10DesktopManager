@@ -5,6 +5,23 @@
 	return
 }
 
+;Author of change: Chimstaz
+postMoveWin()
+{
+	;I had issue that after moving window, non of windows was active
+	Send {Alt down}{tab}{Alt up}
+	turnCapslockOff()
+	return
+}
+
+postSwitchDesktop()
+{	
+	;change tray icon
+	showDesktopNumber()
+	turnCapslockOff()
+}
+;End of changes
+
 turnCapslockOff()
 {
 	;if the capslock key is down then set the capslock state to on so that
@@ -90,3 +107,20 @@ getIndexFromArray(searchFor, array)
 	}
 	return -1
 }
+
+;Author of change: Chimstaz
+;Check desktop number and set appropriate tray icon
+showDesktopNumber()
+{
+	currentDesktop := globalDesktopManager._desktopChanger.desktopMapper.getDesktopNumber()
+	icopath = .\Icon\
+	icopath .= currentDesktop
+	icopath .= ".ico"
+	Menu, Tray, Icon, %icopath%
+	;Progress, m2 b fs18 zh0 X0 Y732 W60, %currentDesktop%, , , Courier New
+	;SetTimer, turnOffProgress, 700
+}
+
+turnOffProgress:
+Progress, off
+return
